@@ -30,23 +30,30 @@ def czy_jest_ksiazka(biblioteka, tytul):
 def usun_ksiazke(biblioteka, tytul):
     if czy_jest_ksiazka(biblioteka, tytul):
         biblioteka.remove(tytul)
-    #     print("Usunieto ksiazke.")
-    # else:
-    #     print("Brak takiej ksiazki.")
 
-# TODO:     4. Napisz funkcję wypozycz_ksiazke(biblioteka, tytul)
+# TODO: 4. Napisz funkcję wypozycz_ksiazke(biblioteka, tytul)
 # używa funkcji usun_ksiazke
 # symuluje wypożyczenie książki
-# komentarz testowy
-def wypozycz_ksiazke(biblioteka, tytul):
+def wypozycz_ksiazke(biblioteka, tytul=None):
+    if not tytul:
+        tytul = input("Podaj tytul ksiazki, ktora chcesz wypozyczyc")
     usun_ksiazke(biblioteka, tytul)
 
+def wypozycz_lub_usun(tytul, biblioteka, wypozyczam=False, usuwam=False):
+    if wypozyczam == True and czy_jest_ksiazka(biblioteka, tytul):
+        print(f"Wypozyczyles ksiazke {tytul}.")
+    elif usuwam == True and czy_jest_ksiazka(biblioteka, tytul):
+        print(f"Usunieto ksiazke {tytul}.")
+    else:
+        print("Brak takiej ksiazki.")
+
 # TODO: 5. Napisz funkcję obsluz_biblioteke()
-# tworzy pustą listę  ukhih
+# tworzy pustą listę
 # dodaje kilka książek
 # próbuje wypożyczyć jedną istniejącą i jedną nieistniejącą
 def obsluz_biblioteke():
     biblioteka = []
+    print(biblioteka)
     dodaje = True
     while dodaje:
         tytul = input("Wpisz tytul ksiazki, ktora chcesz dodac, wpisz 'nie', by zakonczyc dodawanie ksiazek: ")
@@ -54,15 +61,21 @@ def obsluz_biblioteke():
             dodaje = False
         else:
             dodaj_ksiazke(biblioteka, tytul)
+    print(biblioteka)
     wypozyczam = True
     while wypozyczam:
+        print(biblioteka)
         tytul = input("Wpisz tytul ksiazki, ktora chcesz wypozyczyc, wpisz 'nie', by zakonczyc wypozyczanie ksiazek: ")
         if tytul == "nie":
+            # break
             wypozyczam = False
-        elif wypozycz_ksiazke(biblioteka, tytul):
-            print(f"Wypozyczyles ksiazke {tytul}")
         else:
-            print("Nie ma takiej ksiazki.")
+            wyswietl_wypozyczenie(biblioteka, tytul)
+            # print(biblioteka)
+            # wypozycz_lub_usun(tytul, biblioteka, wypozyczam)
+            wypozycz_ksiazke(biblioteka, tytul)
+            print(wypozyczam)
+            print(biblioteka)
 
-# usun_ksiazke(wypozyczane_ksiazki, "abc")
+            print(biblioteka)
 obsluz_biblioteke()
